@@ -136,12 +136,11 @@ const Global = css`
   }
   html,
   body {
-    height: auto;
+    width: 100%;
   }
 
   .root {
     width: 100%;
-    height: 100%;
     font-family: "Lexend Deca", sans-serif;
   }
   @media (max-width: 375px) {
