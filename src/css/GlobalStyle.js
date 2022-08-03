@@ -143,6 +143,9 @@ const Global = css`
     width: 100%;
     font-family: "Lexend Deca", sans-serif;
   }
+  .root button{
+    border:none;
+  }
   @media (max-width: 375px) {
   }
 `;

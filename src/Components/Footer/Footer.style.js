@@ -18,7 +18,6 @@ export const FooterWrapper = styled.div`
 export const Button = styled.button`
   height: 80%;
   background-color: rgba(255, 255, 255, 1);
-  border: none;
   font-weight: 400;
   font-size: min(17.98px, calc(0.05 * 100vw));
   text-align: center;

@@ -35,7 +35,6 @@ export const Button = styled.button`
   color: rgba(255, 255, 255, 1);
   font-size: 26.98px;
   font-weight: 400;
-  border: none;
 `;
 
 export const NoHabits = styled.div`
