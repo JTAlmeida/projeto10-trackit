@@ -1,42 +1,52 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
-import axios from "axios";
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import { signIn } from "../../trackItService";
 import { Wrapper, Input, Form, Button } from "./SignIn.style";
 
 export default function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
 
-  function signIn() {
+  function handleForm(e) {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  function sendSignIn(e) {
+    e.preventDefault();
     console.log("tentou logar");
   }
 
   return (
     <>
       <Wrapper>
-        <img src={logo}></img>
+        <img src={logo} alt="logo"></img>
 
-        <Form onSubmit={signIn}>
+        <Form onSubmit={sendSignIn}>
           <Input
             placeholder="email"
+            name="email"
             type="email"
+            value={form.email}
+            onChange={handleForm}
             required
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
           />
           <Input
             placeholder="senha"
+            name="password"
             type="password"
-            onChange={(e) => setPassword(e.target.value)}
+            value={form.password}
+            onChange={handleForm}
             required
-            value={password}
           />
           <Button type="submit">Entrar</Button>
         </Form>
-        <Link to="/cadastro">
-        Não tem uma conta? Cadastre-se
-        </Link>
+        <Link to="/cadastro">Não tem uma conta? Cadastre-se</Link>
       </Wrapper>
     </>
   );

@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
     margin-bottom: 33px;
   }
 
-  a{
+  a {
     color: rgba(82, 182, 255, 1);
     cursor: pointer;
   }
@@ -43,6 +43,9 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 45px;
   width: 80%;
   margin-bottom: 25px;

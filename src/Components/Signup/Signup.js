@@ -1,57 +1,149 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
-import axios from "axios";
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import { signUp } from "../../trackItService";
 import { Wrapper, Input, Form, Button } from "./Signup.style";
+import { Oval } from "react-loader-spinner";
 
 export default function Signup() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [userImg, setUserImg] = useState("");
+  const navigate = useNavigate();
 
-  function signUp() {
-    console.log("tentou criar user");
+  const [isLoading, setIsLoading] = useState(false);
+  const [form, setForm] = useState({
+    email: "",
+    name: "",
+    image: "",
+    password: "",
+  });
+
+  console.log(form);
+
+  function handleForm(e) {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  function sendSignUp(e) {
+    e.preventDefault();
+    setIsLoading(true);
+
+    const promise = signUp(form);
+    promise
+    .catch((res)=>{        
+        alert(res.response.data.message);
+        setIsLoading(false);
+        setForm({
+          email: "",
+          name: "",
+          image: "",
+          password: ""
+        });
+      })
+      .then((res)=>{
+        setIsLoading(false);
+        setForm({
+          email: "",
+          name: "",
+          image: "",
+          password: ""
+        });
+        navigate('/');
+      });
   }
 
   return (
     <>
-      <Wrapper>
-        <img src={logo}></img>
+      {isLoading ? (
+        <Wrapper>
+          <img src={logo} alt="logo"></img>
 
-        <Form onSubmit={signUp}>
-          <Input
-            placeholder="email"
-            type="email"
-            required
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-          />
-          <Input
-            placeholder="senha"
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            value={password}
-          />
-          <Input
-            placeholder="nome"
-            type="text"
-            required
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-          />
-          <Input
-            placeholder="foto"
-            type="text"
-            required
-            onChange={(e) => setUserImg(e.target.value)}
-            value={userImg}
-          />
-          <Button type="submit">Entrar</Button>
-        </Form>
-        <Link to="/">Já tem uma conta? Faça login!</Link>
-      </Wrapper>
+          <Form onSubmit={sendSignUp}>
+            <Input
+              disabled
+              placeholder="email"
+              name="email"
+              type="email"
+              required
+              onChange={handleForm}
+              value={form.email}
+            />
+            <Input
+              disabled
+              placeholder="senha"
+              name="password"
+              type="password"
+              onChange={handleForm}
+              required
+              value={form.password}
+            />
+            <Input
+              disabled
+              placeholder="nome"
+              name="name"
+              type="text"
+              required
+              onChange={handleForm}
+              value={form.name}
+            />
+            <Input
+              disabled
+              placeholder="foto"
+              name="image"
+              type="url"
+              required
+              onChange={handleForm}
+              value={form.image}
+            />
+            <Button disabled type="submit">
+              <Oval color="rgba(255, 255, 255, 1)" height={30} width={100} />
+            </Button>
+          </Form>
+          <Link to="/">Já tem uma conta? Faça login!</Link>
+        </Wrapper>
+      ) : (
+        <Wrapper>
+          <img src={logo} alt="logo"></img>
+
+          <Form onSubmit={sendSignUp}>
+            <Input
+              placeholder="email"
+              name="email"
+              type="email"
+              required
+              onChange={handleForm}
+              value={form.email}
+            />
+            <Input
+              placeholder="senha"
+              name="password"
+              type="password"
+              onChange={handleForm}
+              required
+              value={form.password}
+            />
+            <Input
+              placeholder="nome"
+              name="name"
+              type="text"
+              required
+              onChange={handleForm}
+              value={form.name}
+            />
+            <Input
+              placeholder="foto"
+              name="image"
+              type="url"
+              required
+              onChange={handleForm}
+              value={form.image}
+            />
+            <Button type="submit">Cadastrar</Button>
+          </Form>
+          <Link to="/">Já tem uma conta? Faça login!</Link>
+        </Wrapper>
+      )}
     </>
   );
 }
