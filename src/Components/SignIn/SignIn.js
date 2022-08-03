@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import logo from "../../assets/logo.png";
-import { Wrapper, Input, Form, Button } from "./Login.style";
+import { Wrapper, Input, Form, Button } from "./SignIn.style";
 
-export default function Login() {
+export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function login() {
+  function signIn() {
     console.log("tentou logar");
   }
 
@@ -17,7 +17,7 @@ export default function Login() {
       <Wrapper>
         <img src={logo}></img>
 
-        <Form onSubmit={login}>
+        <Form onSubmit={signIn}>
           <Input
             placeholder="email"
             type="email"

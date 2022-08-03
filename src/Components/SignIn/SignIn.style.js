@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
     margin-bottom: 33px;
   }
 
-  a{
+  a {
     color: rgba(82, 182, 255, 1);
     cursor: pointer;
   }
@@ -29,10 +29,13 @@ export const Input = styled.input`
   width: 80%;
   margin-bottom: 6px;
   border: 1px solid rgba(212, 212, 212, 1);
+  padding-left: 11px;
+  color: rgba(102, 102, 102, 1);
+  font-size: 19.98px;
+  font-weight: 400;
   border-radius: 5px;
 
   &::placeholder {
-    padding-left: 11px;
     color: rgba(219, 219, 219, 1);
     font-size: 19.98px;
     font-weight: 400;
