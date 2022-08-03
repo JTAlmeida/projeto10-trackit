@@ -1,23 +1,46 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
-import "../css/reset.css";
-import "../css/style.css";
-import Header from "./Header";
-import Login from "./Login";
-import Signup from "./Signup";
+import GlobalStyle from "../css/GlobalStyle";
+import PrivatePage from "./PrivatePage";
+import Header from "./Header/Header";
+import Login from "./Login/Login";
+import Signup from "./Signup/Signup";
+import Habits from "./Habits/Habits";
+import Today from "./Today/Today";
+import History from "./History/History";
 
 export default function App() {
-
   return (
     <>
-      <Header />
+      <GlobalStyle />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />}></Route>
           <Route path="/cadastro" element={<Signup />}></Route>
-          <Route path="/habitos" element={<Signup />}></Route>
-          <Route path="/hoje" element={<Signup />}></Route>
-          <Route path="/historico" element={<Signup />}></Route>
+          <Route
+            path="/habitos"
+            element={
+              <PrivatePage>
+                <Habits />
+              </PrivatePage>
+            }
+          ></Route>
+          <Route
+            path="/hoje"
+            element={
+              <PrivatePage>
+                <Today />
+              </PrivatePage>
+            }
+          ></Route>
+          <Route
+            path="/historico"
+            element={
+              <PrivatePage>
+                <History />
+              </PrivatePage>
+            }
+          ></Route>
         </Routes>
       </BrowserRouter>
     </>
