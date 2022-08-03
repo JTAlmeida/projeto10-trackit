@@ -16,8 +16,6 @@ export default function Signup() {
     password: "",
   });
 
-  console.log(form);
-
   function handleForm(e) {
     setForm({
       ...form,
@@ -41,7 +39,7 @@ export default function Signup() {
           password: ""
         });
       })
-      .then((res)=>{
+      .then(()=>{
         setIsLoading(false);
         setForm({
           email: "",
