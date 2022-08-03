@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import GlobalStyle from "../css/GlobalStyle";
 import PrivatePage from "./PrivatePage";
-import Header from "./Header/Header";
 import Login from "./Login/Login";
 import Signup from "./Signup/Signup";
 import Habits from "./Habits/Habits";
