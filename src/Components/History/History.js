@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import TokenContext from "../../contexts/TokenContext";
 import {
   HistoryWrapper,
   ContentWrapper,
@@ -7,6 +9,8 @@ import {
 } from "./History.style";
 
 export default function History() {
+  const { token, setToken } = useContext(TokenContext);
+  
   return (
     <>
       <HistoryWrapper>

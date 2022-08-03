@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useContext } from "react";
+import TokenContext from "../../contexts/TokenContext";
 import logo from "../../assets/logo.png";
 import { signIn } from "../../trackItService";
 import { Wrapper, Input, Form, Button } from "./SignIn.style";
 import { Oval } from "react-loader-spinner";
 
 export default function SignIn() {
+  const { token, setToken } = useContext(TokenContext);
   const [isLoading, setIsLoading] = useState(false);
 
   const [form, setForm] = useState({
@@ -38,6 +41,7 @@ export default function SignIn() {
     promise.then((res) => {
       console.log(res);
       setIsLoading(false);
+      setToken(res.data.token);
       setForm({
         email: "",
         password: "",

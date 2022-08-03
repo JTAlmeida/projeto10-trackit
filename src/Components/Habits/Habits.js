@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import TokenContext from "../../contexts/TokenContext";
 import {
   HabitsWrapper,
   ContentWrapper,
@@ -7,6 +9,8 @@ import {
 } from "./Habits.style";
 
 export default function Habits() {
+  const { token, setToken } = useContext(TokenContext);
+  
   return (
     <>
       <HabitsWrapper>
