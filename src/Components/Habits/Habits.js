@@ -1,7 +1,8 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getHabits, postHabits } from "../../trackItService";
-import TokenContext from "../../contexts/TokenContext";
+import UserContext from "../../contexts/UserContext";
+
 import {
   HabitsWrapper,
   ContentWrapper,
@@ -14,7 +15,7 @@ import {
 } from "./Habits.style";
 
 export default function Habits() {
-  const { token, setToken } = useContext(TokenContext);
+  const { user, setUser } = useContext(UserContext);
   const [newHabit, setNewHabit] = useState(false);
   const [habits, setHabits] = useState([]);
   const navigate = useNavigate();

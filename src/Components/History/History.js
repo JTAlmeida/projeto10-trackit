@@ -1,16 +1,16 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import TokenContext from "../../contexts/TokenContext";
+import UserContext from "../../contexts/UserContext";
+
 import {
   HistoryWrapper,
   ContentWrapper,
-  MyHabits,
   NoHistory,
   MyHistory,
 } from "./History.style";
 
 export default function History() {
-  const { token, setToken } = useContext(TokenContext);
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   return (

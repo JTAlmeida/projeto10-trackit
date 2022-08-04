@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useContext } from "react";
-import TokenContext from "../../contexts/TokenContext";
+import UserContext from "../../contexts/UserContext";
 import logo from "../../assets/logo.png";
 import { signUp } from "../../trackItService";
 import { Wrapper, Input, Form, Button } from "./Signup.style";
@@ -9,7 +9,7 @@ import { Oval } from "react-loader-spinner";
 
 export default function Signup() {
   const navigate = useNavigate();
-  const { token, setToken } = useContext(TokenContext);
+  const { user, setUser } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
     email: "",
@@ -19,8 +19,8 @@ export default function Signup() {
   });
 
   useEffect(() => {
-    if (token){
-      setToken(JSON.parse(localStorage.getItem("trackit")));
+    if (user){
+      setUser(JSON.parse(localStorage.getItem("trackit")));
       navigate("/hoje");
     }
   }, []);

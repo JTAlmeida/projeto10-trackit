@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useContext } from "react";
-import TokenContext from "../../contexts/TokenContext";
+import UserContext from "../../contexts/UserContext";
 import logo from "../../assets/logo.png";
 import { signIn } from "../../trackItService";
 import { Wrapper, Input, Form, Button } from "./SignIn.style";
@@ -9,12 +9,14 @@ import { Oval } from "react-loader-spinner";
 
 export default function SignIn() {
   const navigate = useNavigate();
-  const { token, setToken } = useContext(TokenContext);
+  const { user, setUser } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
 
+  console.log(user);
+
   useEffect(() => {
-    if (token){
-      setToken(JSON.parse(localStorage.getItem("trackit")));
+    if (user){
+      setUser(JSON.parse(localStorage.getItem("trackit")));
       navigate("/hoje");
     }
   }, []);
@@ -49,8 +51,8 @@ export default function SignIn() {
     promise.then((res) => {
       const timestamp = +new Date();
       setIsLoading(false);
-      setToken(res.data.token);
-      localStorage.setItem("trackit", JSON.stringify({token: res.data.token, timestamp}))
+      setUser(res.data);
+      localStorage.setItem("trackit", JSON.stringify({id: res.data.id, name: res.data.name, image: res.data.image, token: res.data.token, timestamp}))
       setForm({
         email: "",
         password: "",
