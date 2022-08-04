@@ -5,7 +5,7 @@ import UserContext from "../../contexts/UserContext";
 import logo from "../../assets/logo.png";
 import { signUp } from "../../trackItService";
 import { Wrapper, Input, Form, Button } from "./Signup.style";
-import { Oval } from "react-loader-spinner";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ export default function Signup() {
   });
 
   useEffect(() => {
-    if (user){
+    if (user) {
       setUser(JSON.parse(localStorage.getItem("trackit")));
       navigate("/hoje");
     }
@@ -38,25 +38,25 @@ export default function Signup() {
 
     const promise = signUp(form);
     promise
-    .catch((res)=>{        
+      .catch((res) => {
         alert(res.response.data.message);
         setIsLoading(false);
         setForm({
           email: "",
           name: "",
           image: "",
-          password: ""
+          password: "",
         });
       })
-      .then(()=>{
+      .then(() => {
         setIsLoading(false);
         setForm({
           email: "",
           name: "",
           image: "",
-          password: ""
+          password: "",
         });
-        navigate('/');
+        navigate("/");
       });
   }
 
@@ -104,7 +104,11 @@ export default function Signup() {
               value={form.image}
             />
             <Button disabled type="submit">
-              <Oval color="rgba(255, 255, 255, 1)" height={30} width={100} />
+              <ThreeDots
+                color="rgba(255, 255, 255, 1)"
+                height={11}
+                width={50}
+              />
             </Button>
           </Form>
           <Link to="/">Já tem uma conta? Faça login!</Link>

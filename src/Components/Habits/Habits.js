@@ -1,8 +1,8 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getHabits, postHabits } from "../../trackItService";
-import UserContext from "../../contexts/UserContext";
-
+import { getHabits } from "../../trackItService";
+import CreateHabit from "../CreateHabits/CreateHabits";
+import delIcon from "../../assets/delete-icon.png";
 import {
   HabitsWrapper,
   ContentWrapper,
@@ -16,31 +16,24 @@ import {
 
 export default function Habits() {
   const navigate = useNavigate();
-  const { user, setUser } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(false);
   const [clicked, setClicked] = useState(false);
-  const [id, setId] = useState();
-  const [name, setName] = useState();
-  const [done, setDone] = useState();
-  const [currentSequence, setCurrentSequence] = useState();
-  const [highestSequence, setHighestSequence] = useState();
+  const [habitsData, setHabitsData] = useState([]);
 
   useEffect(() => {
-    getHabits();
+    const promise = getHabits();
 
-    getHabits().catch((res) => {
+    promise.catch((res) => {
       alert(res.response.data.message);
-      navigate("/");
     });
 
-    getHabits().then((res) => {
-      setId(res.data.id);
-      setName(res.data.name);
-      setDone(res.data.done);
-      setCurrentSequence(res.data.currentSequence);
-      setHighestSequence(res.data.HighestSequence);
+    promise.then((res) => {
+      console.log(res);
+      setHabitsData(res.data);
     });
-  }, []);
+  }, [isLoading]);
 
+  console.log(habitsData);
   return (
     <>
       <HabitsWrapper>
@@ -50,7 +43,6 @@ export default function Habits() {
             {clicked ? (
               <Button
                 onClick={() => {
-                  console.log("clicou");
                   setClicked(!clicked);
                 }}
               >
@@ -59,7 +51,6 @@ export default function Habits() {
             ) : (
               <Button
                 onClick={() => {
-                  console.log("clicou");
                   setClicked(!clicked);
                 }}
               >
@@ -70,62 +61,42 @@ export default function Habits() {
 
           {clicked ? (
             <>
-              <CreateHabit />
-              <NoHabits>
-                Você não tem nenhum hábito cadastrado ainda. Adicione um hábito
-                para começar a trackear!
-              </NoHabits>
+              <CreateHabit
+                clicked={clicked}
+                setClicked={setClicked}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+              />
+              {() => {
+                if (habitsData === []) {
+                  <NoHabits>
+                    Você não tem nenhum hábito cadastrado ainda. Adicione um
+                    hábito para começar a trackear!
+                  </NoHabits>;
+                } else {
+                }
+              }}
             </>
           ) : (
-            <NoHabits>
-              Você não tem nenhum hábito cadastrado ainda. Adicione um hábito
-              para começar a trackear!
-            </NoHabits>
+            <>
+              {() => {
+                if (habitsData === []) {
+                  <NoHabits>
+                    Você não tem nenhum hábito cadastrado ainda. Adicione um
+                    hábito para começar a trackear!
+                  </NoHabits>;
+                }
+              }}
+            </>
           )}
+          {habitsData.map((habit, index) => (
+            <HabitWrapper key={index}>
+              <h1>{habit.name}</h1>
+              <img src={delIcon} width="14" height="16" />
+            </HabitWrapper>
+          ))}
         </ContentWrapper>
       </HabitsWrapper>
     </>
-  );
-}
-
-function CreateHabit() {
-  return (
-    <HabitWrapper>
-      <input type="text" placeholder="nome do hábito" />
-      <Checkboxes>
-        <label>
-          <input type="checkbox" />
-          <span>D</span>
-        </label>
-        <label>
-          <input type="checkbox" />
-          <span>S</span>
-        </label>
-        <label>
-          <input type="checkbox" />
-          <span>T</span>
-        </label>
-        <label>
-          <input type="checkbox" />
-          <span>Q</span>
-        </label>
-        <label>
-          <input type="checkbox" />
-          <span>Q</span>
-        </label>
-        <label>
-          <input type="checkbox" />
-          <span>S</span>
-        </label>
-        <label>
-          <input type="checkbox" />
-          <span>S</span>
-        </label>
-      </Checkboxes>
-      <ButtonsContainer>
-        <button>Cancelar</button>
-        <button>Salvar</button>
-      </ButtonsContainer>
-    </HabitWrapper>
   );
 }

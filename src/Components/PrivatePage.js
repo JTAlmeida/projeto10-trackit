@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import UserContext from "../contexts/UserContext";
 import logo from "../assets/logo.png";
 import styled from "styled-components";
 import Header from "./Header/Header";
@@ -36,7 +35,7 @@ export default function PrivatePage({ children }) {
     return renderError();
   } else {
     const timeLogged = auth.timestamp;
-    if (now - timeLogged >= 30 * MIN) {
+    if (now - timeLogged >= 30000 * MIN) {
       return renderError();
     } else {
       return (

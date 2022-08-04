@@ -5,7 +5,7 @@ import UserContext from "../../contexts/UserContext";
 import logo from "../../assets/logo.png";
 import { signIn } from "../../trackItService";
 import { Wrapper, Input, Form, Button } from "./SignIn.style";
-import { Oval } from "react-loader-spinner";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ export default function SignIn() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (user){
+    if (user) {
       setUser(JSON.parse(localStorage.getItem("trackit")));
       navigate("/hoje");
     }
@@ -23,8 +23,6 @@ export default function SignIn() {
     email: "",
     password: "",
   });
-
-  
 
   function handleForm(e) {
     setForm({
@@ -50,7 +48,16 @@ export default function SignIn() {
       const timestamp = +new Date();
       setIsLoading(false);
       setUser(res.data);
-      localStorage.setItem("trackit", JSON.stringify({id: res.data.id, name: res.data.name, image: res.data.image, token: res.data.token, timestamp}))
+      localStorage.setItem(
+        "trackit",
+        JSON.stringify({
+          id: res.data.id,
+          name: res.data.name,
+          image: res.data.image,
+          token: res.data.token,
+          timestamp,
+        })
+      );
       setForm({
         email: "",
         password: "",
@@ -85,7 +92,11 @@ export default function SignIn() {
               required
             />
             <Button disabled type="submit">
-              <Oval color="rgba(255, 255, 255, 1)" height={30} width={100} />
+              <ThreeDots
+                color="rgba(255, 255, 255, 1)"
+                height={11}
+                width={50}
+              />
             </Button>
           </Form>
           <Link to="/cadastro">Não tem uma conta? Cadastre-se</Link>
