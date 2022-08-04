@@ -15,10 +15,10 @@ import {
 } from "./Habits.style";
 
 export default function Habits() {
+  const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [newHabit, setNewHabit] = useState(false);
-  const [habits, setHabits] = useState([]);
-  const navigate = useNavigate();
+  const [clicked, setClicked] = useState(false);
   const [id, setId] = useState();
   const [name, setName] = useState();
   const [done, setDone] = useState();
@@ -48,18 +48,28 @@ export default function Habits() {
         <ContentWrapper>
           <HabitsTop>
             Meus Hábitos
-            <Button
-              onClick={() => {
-                console.log("clicou");
-                CreateHabit();
-                setNewHabit(true);
-              }}
-            >
-              +
-            </Button>
+            {clicked ? (
+              <Button
+                onClick={() => {
+                  console.log("clicou");
+                  setClicked(!clicked);
+                }}
+              >
+                -
+              </Button>
+            ) : (
+              <Button
+                onClick={() => {
+                  console.log("clicou");
+                  setClicked(!clicked);
+                }}
+              >
+                +
+              </Button>
+            )}
           </HabitsTop>
 
-          {habits ? (
+          {clicked ? (
             <>
               <CreateHabit />
               <NoHabits>

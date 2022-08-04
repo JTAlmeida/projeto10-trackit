@@ -25,7 +25,7 @@ function ProgressBar() {
   return (
     <ProgressWrapper>
       <CircularProgressbar
-        value={42}
+        value={50}
         text={`Hoje`}
         background={true}
         backgroundPadding={6}
