@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import TokenContext from "../../contexts/TokenContext";
 import {
   HistoryWrapper,
@@ -10,7 +11,8 @@ import {
 
 export default function History() {
   const { token, setToken } = useContext(TokenContext);
-  
+  const navigate = useNavigate();
+
   return (
     <>
       <HistoryWrapper>

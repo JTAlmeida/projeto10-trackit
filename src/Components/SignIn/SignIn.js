@@ -39,9 +39,11 @@ export default function SignIn() {
     });
 
     promise.then((res) => {
+      const timestamp = +new Date();
       console.log(res);
       setIsLoading(false);
       setToken(res.data.token);
+      localStorage.setItem("trackit", JSON.stringify({token: res.data.token, timestamp}))
       setForm({
         email: "",
         password: "",
