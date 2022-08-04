@@ -25,6 +25,7 @@ export const HabitsTop = styled.div`
   color: rgba(18, 107, 165, 1);
   font-size: 22.98px;
   font-weight: 400;
+  margin-bottom: 20px;
 `;
 
 export const Button = styled.button`
@@ -49,7 +50,7 @@ export const NoHabits = styled.div`
 export const HabitWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin-top: 20px;
+  margin-bottom: 10px;
   width: 100%;
   height: 91px;
   background-color: rgba(255, 255, 255, 1);
