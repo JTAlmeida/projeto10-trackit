@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getHabits, postHabits } from "../../trackItService";
 import TokenContext from "../../contexts/TokenContext";
 import {
   HabitsWrapper,
@@ -42,6 +43,10 @@ export default function Habits() {
           {habits ? (
             <>
               <CreateHabit />
+              <NoHabits>
+              Você não tem nenhum hábito cadastrado ainda. Adicione um hábito
+              para começar a trackear!
+            </NoHabits>
             </>
           ) : (
             <NoHabits>

@@ -12,6 +12,14 @@ import History from "./History/History";
 export default function App() {
   const [token, setToken] = useState("");
 
+  console.log(token)
+  
+  const auth = JSON.parse(localStorage.getItem("trackit"));
+
+  if (auth && token === ""){
+    setToken(JSON.parse(localStorage.getItem("trackit")));
+  }
+  
   return (
     <>
       <GlobalStyle />

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import TokenContext from "../contexts/TokenContext";
 import logo from "../assets/logo.png";
 import styled from "styled-components";
 import Header from "./Header/Header";
@@ -30,18 +31,22 @@ export default function PrivatePage({ children }) {
   }
 
   const now = +new Date();
-  const timeLogged = auth.timestamp;
 
-  if (!auth.token || now - timeLogged >= 60*MIN) {
+  if (!auth) {
     return renderError();
   } else {
-    return (
-      <>
-        <Header />
-        {children}
-        <Footer />
-      </>
-    );
+    const timeLogged = auth.timestamp;
+    if (now - timeLogged >= 30 * MIN) {
+      return renderError();
+    } else {
+      return (
+        <>
+          <Header />
+          {children}
+          <Footer />
+        </>
+      );
+    }
   }
 }
 

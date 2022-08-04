@@ -28,4 +28,10 @@ function postHabits(body) {
   return promise;
 }
 
-export {signUp, signIn, postHabits};
+function getHabits(){
+  const config = createHeaders();
+  const promise = axios.get(`${BASE_URL}/habits`, config);
+  return promise;
+}
+
+export {signUp, signIn, postHabits, getHabits};

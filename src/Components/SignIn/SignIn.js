@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useContext } from "react";
 import TokenContext from "../../contexts/TokenContext";
@@ -8,15 +8,23 @@ import { Wrapper, Input, Form, Button } from "./SignIn.style";
 import { Oval } from "react-loader-spinner";
 
 export default function SignIn() {
+  const navigate = useNavigate();
   const { token, setToken } = useContext(TokenContext);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (token){
+      setToken(JSON.parse(localStorage.getItem("trackit")));
+      navigate("/hoje");
+    }
+  }, []);
 
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
-  const navigate = useNavigate();
+  
 
   function handleForm(e) {
     setForm({
@@ -40,7 +48,6 @@ export default function SignIn() {
 
     promise.then((res) => {
       const timestamp = +new Date();
-      console.log(res);
       setIsLoading(false);
       setToken(res.data.token);
       localStorage.setItem("trackit", JSON.stringify({token: res.data.token, timestamp}))
