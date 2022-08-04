@@ -12,8 +12,6 @@ export default function SignIn() {
   const { user, setUser } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log(user);
-
   useEffect(() => {
     if (user){
       setUser(JSON.parse(localStorage.getItem("trackit")));

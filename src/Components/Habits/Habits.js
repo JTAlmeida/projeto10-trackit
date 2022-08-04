@@ -17,7 +17,6 @@ import {
 export default function Habits() {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
-  const [newHabit, setNewHabit] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [id, setId] = useState();
   const [name, setName] = useState();
