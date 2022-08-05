@@ -34,4 +34,10 @@ function getHabits(){
   return promise;
 }
 
-export {signUp, signIn, postHabits, getHabits};
+function deleteHabit(habitId) {
+  const config = createHeaders();
+  const promise = axios.delete(`${BASE_URL}/habits/${habitId}`, config);
+  return promise;
+}
+
+export {signUp, signIn, postHabits, getHabits, deleteHabit};

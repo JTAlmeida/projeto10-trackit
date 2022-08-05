@@ -88,7 +88,7 @@ export const Checkboxes = styled.div`
 export const HabitWrapper = styled.div`
   position: relative;
   width: 100%;
-  height: 91px;
+  min-height: 91px;
   margin: 5px 0;
   padding: 18px;
   border-radius: 5px;

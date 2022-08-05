@@ -142,6 +142,7 @@ const Global = css`
   .root {
     width: 100%;
     font-family: "Lexend Deca", sans-serif;
+    word-wrap: break-word;
   }
   .root button{
     border:none;

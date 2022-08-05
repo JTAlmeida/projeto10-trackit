@@ -25,14 +25,12 @@ export default function CreateHabit({
   ];
 
   function sendHabit(e) {
-    if (postName.length === 0){
-      alert('Preencha o campo com o nome do hábito.');
-      return;
-    } else if(postDays.length === 0){
-      alert('Selecione pelo menos um dia para este hábito.');
+    e.preventDefault();
+    if (postDays.length === 0) {
+      alert("Selecione pelo menos um dia para este hábito.");
       return;
     }
-    e.preventDefault();
+    setIsLoading(true);
     const name = postName;
     const days = postDays;
     const promise = postHabits({ name, days });
@@ -52,6 +50,7 @@ export default function CreateHabit({
       setClicked(!clicked);
     });
   }
+
   return (
     <>
       {isLoading ? (
@@ -112,7 +111,7 @@ export default function CreateHabit({
             placeholder="nome do hábito"
             value={postName}
             name="name"
-            onChange={(e) => setPostName(e.target.value)}
+            onChange={(e) => setPostName( e.target.value)}
             required
           />
           <Checkboxes>
@@ -136,14 +135,7 @@ export default function CreateHabit({
             >
               Cancelar
             </button>
-            <button
-              type="submit"
-              onClick={() => {
-                setIsLoading(true);
-              }}
-            >
-              Salvar
-            </button>
+            <button type="submit">Salvar</button>
           </ButtonsContainer>
         </HabitWrapper>
       )}
@@ -159,6 +151,7 @@ function WeekDay({ value, day, postDays, setPostDays }) {
       <input
         type="checkbox"
         value={value}
+        onFocus={postDays}
         onChange={(e) => {
           if (!hasValue) {
             setPostDays([...postDays, e.target.value]);
