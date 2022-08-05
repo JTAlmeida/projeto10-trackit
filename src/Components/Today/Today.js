@@ -22,7 +22,7 @@ export default function Today() {
   let weekday = dayjs().locale("pt-br").format("dddd").replaceAll("-feira", "");
   weekday = weekday.replace(/^./, weekday[0].toUpperCase());
   const date = dayjs().format("DD/MM");
-  const { todayProgress, setTodayProgress } = useContext(TodayProgressContext);
+  const { setTodayProgress } = useContext(TodayProgressContext);
   const { reloadToday, setReloadToday } = useContext(ReloadTodayContext);
   const [todayHabits, setTodayHabits] = useState([]);
 

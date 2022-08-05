@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { getHabits, deleteHabit } from "../../trackItService";
-import TodayProgressContext from "../../contexts/TodayProgressContext";
+//import TodayProgressContext from "../../contexts/TodayProgressContext";
 import CreateHabit from "../CreateHabits/CreateHabits";
 import WeekDayContext from "../../contexts/WeekDayContext";
 import delIcon from "../../assets/delete-icon.png";
@@ -19,7 +19,7 @@ export default function Habits() {
   const [clicked, setClicked] = useState(false);
   const [habitsData, setHabitsData] = useState([]);
   const [reloadHabits, setReloadHabits] = useState(false);
-  const { todayProgress, setTodayProgress } = useContext(TodayProgressContext);
+  //const { todayProgress, setTodayProgress } = useContext(TodayProgressContext);
   const { weekDayID } = useContext(WeekDayContext);
 
   /*function newPercentage() {
