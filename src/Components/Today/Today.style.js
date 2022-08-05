@@ -14,12 +14,12 @@ export const TodayWrapper = styled.div`
 `;
 
 export const TodayContent = styled.div`
-  width: calc(min(600px, 100vw) - 34px);
+  width: calc(min(100vw) - 34px);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  margin-bottom: 160px;
+  margin-bottom: 110px;
   h1 {
     margin-top: 28px;
     width: 100%;

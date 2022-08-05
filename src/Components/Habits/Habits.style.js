@@ -3,9 +3,8 @@ import styled from "styled-components";
 export const HabitsWrapper = styled.div`
   background-color: rgba(242, 242, 242, 1);
   margin-top: 70px;
-  margin-bottom: 90px;
   width: 100%;
-  min-height: calc(100vh - 160px);
+  min-height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -13,9 +12,9 @@ export const HabitsWrapper = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
-  width: 100%;
-  padding: 0 17px;
+  width: calc(min(100vw) - 34px);
   margin-top: 28px;
+  margin-bottom: 110px;
 `;
 
 export const HabitsTop = styled.div`

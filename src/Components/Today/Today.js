@@ -82,7 +82,7 @@ export default function Today() {
         </h1>
         <h2>
           {dailyPercentage > 0
-            ? `${dailyPercentage}% dos hábitos concluídos`
+            ? `${dailyPercentage.toFixed(0)}% dos hábitos concluídos`
             : "Nenhum hábito concluído ainda"}
         </h2>
         <HabitContainer>

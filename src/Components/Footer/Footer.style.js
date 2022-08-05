@@ -15,7 +15,6 @@ export const FooterWrapper = styled.div`
 `;
 
 export const Button = styled.button`
-  padding-bottom: 35px;
   background-color: rgba(255, 255, 255, 1);
   font-weight: 400;
   font-size: min(17.98px, calc(0.07 * 100vw));
