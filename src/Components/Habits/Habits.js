@@ -41,14 +41,14 @@ export default function Habits() {
     const promise = deleteHabit(habitId);
     promise
       .then(() => {
+        setHabitsData([]);
         setIsLoading(false);
+        alert("deletado com sucesso");
       })
       .catch((res) => {
         alert(res.response.data.message);
       });
   };
-
-  console.log(habitsData);
 
   return (
     <>

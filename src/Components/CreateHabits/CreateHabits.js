@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import TodayProgressContext from "../../contexts/TodayProgressContext";
 import { ThreeDots } from "react-loader-spinner";
 import { postHabits } from "../../trackItService";
 import {
@@ -12,6 +13,7 @@ export default function CreateHabit({
   isLoading,
   setIsLoading,
 }) {
+  const { todayProgress, setTodayProgress } = useContext(TodayProgressContext);
   const [postName, setPostName] = useState("");
   const [postDays, setPostDays] = useState([]);
   const checkBoxes = [
@@ -23,6 +25,10 @@ export default function CreateHabit({
     { value: 5, day: "S" },
     { value: 6, day: "S" },
   ];
+  function newPercentage(){
+    const newProgress = (todayProgress.todayProgress * todayProgress.length)/(todayProgress.length+1);
+    return newProgress;
+  }
 
   function sendHabit(e) {
     e.preventDefault();
@@ -40,7 +46,8 @@ export default function CreateHabit({
       setIsLoading(false);
     });
 
-    promise.then((res) => {
+    promise.then(() => {
+      setTodayProgress({todayProgress: newPercentage(), length: todayProgress.length+1});
       setIsLoading(false);
       setClicked(!clicked);
     });

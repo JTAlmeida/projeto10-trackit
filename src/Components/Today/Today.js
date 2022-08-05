@@ -16,7 +16,6 @@ import {
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import checkbox from "../../assets/checkbox.svg";
-import Footer from "../Footer/Footer";
 
 export default function Today() {
   let weekday = dayjs().locale("pt-br").format("dddd").replaceAll("-feira", "");
@@ -40,7 +39,7 @@ export default function Today() {
       .then((res) => {
         console.log(res);
         setTodayHabits([...res.data]);
-        setTodayProgress({ todayProgress: getPercentage([...res.data]) });
+        setTodayProgress({ todayProgress: getPercentage([...res.data]), length: res.data.length});
       })
       .catch((res) => {
         alert(res.response.data.message);

@@ -35,7 +35,7 @@ export default function PrivatePage({ children }) {
     return renderError();
   } else {
     const timeLogged = auth.timestamp;
-    if (now - timeLogged >= 30000 * MIN) {
+    if (now - timeLogged >= 10 * MIN) {
       return renderError();
     } else {
       return (
