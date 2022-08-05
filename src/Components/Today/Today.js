@@ -49,7 +49,7 @@ export default function Today() {
 
   console.log(todayProgress);
 
-  const handleMarkHabit = (habitID, isChecked) => {
+  const handleCheckHabit = (habitID, isChecked) => {
     if (!isChecked) {
       const promise = selectTodayHabit(habitID);
       promise
@@ -75,33 +75,34 @@ export default function Today() {
 
   return (
     <>
-    <TodayWrapper>
-      <TodayContent percentCompleted={dailyPercentage}>
-        <h1>
-          {weekday}, {date}
-        </h1>
-        <h2>
-          {dailyPercentage > 0
-            ? `${dailyPercentage.toFixed(0)}% dos hábitos concluídos`
-            : "Nenhum hábito concluído ainda"}
-        </h2>
-        <HabitContainer>
-          {todayHabits.map((habit) => {
-            return (
-              <TodayHabit
-                habitName={habit.name}
-                currentSequence={habit.currentSequence}
-                highestSequence={habit.highestSequence}
-                completed={habit.done}
-                handleMarkHabit={() => handleMarkHabit(habit.id, habit.done)}
-                key={habit.id}
-              />
-            );
-          })}
-        </HabitContainer>
-      </TodayContent>
-    </TodayWrapper>
-    <Footer todayProgress={todayProgress}></Footer>
+      <TodayWrapper>
+        <TodayContent percentCompleted={dailyPercentage}>
+          <h1>
+            {weekday}, {date}
+          </h1>
+          <h2>
+            {dailyPercentage > 0
+              ? `${dailyPercentage.toFixed(0)}% dos hábitos concluídos`
+              : "Nenhum hábito concluído ainda"}
+          </h2>
+          <HabitContainer>
+            {todayHabits.map((habit, index) => {
+              return (
+                <TodayHabit
+                  key={index}
+                  habitName={habit.name}
+                  currentSequence={habit.currentSequence}
+                  highestSequence={habit.highestSequence}
+                  completed={habit.done}
+                  handleCheckHabit={() =>
+                    handleCheckHabit(habit.id, habit.done)
+                  }
+                />
+              );
+            })}
+          </HabitContainer>
+        </TodayContent>
+      </TodayWrapper>
     </>
   );
 }
@@ -111,19 +112,21 @@ function TodayHabit({
   currentSequence,
   highestSequence,
   completed,
-  handleMarkHabit,
+  handleCheckHabit,
 }) {
+  console.log(completed);
+
   return (
     <HabitWrapper>
       <HabitInfo
-        greenCurrent={completed}
-        greenHighest={currentSequence >= highestSequence}
+        isComplete={completed}
+        isHighest={currentSequence >= highestSequence}
       >
-        <h3>{habitName}</h3>
-        <h4>{`Sequência atual: ${currentSequence} dias`}</h4>
-        <h5>{`Seu recorde: ${highestSequence} dias`}</h5>
+        <p>{habitName}</p>
+        <h3>Sequência atual: <h4>{` ${currentSequence} dia(s)`}</h4></h3>
+        <h3>Seu recorde: <h5>{` ${highestSequence} dia(s)`}</h5></h3>
       </HabitInfo>
-      <HabitStatus completed={completed} onClick={handleMarkHabit}>
+      <HabitStatus completed={completed} onClick={handleCheckHabit}>
         <img src={checkbox} alt="checkbox" />
       </HabitStatus>
     </HabitWrapper>

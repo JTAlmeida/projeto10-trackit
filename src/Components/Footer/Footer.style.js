@@ -10,7 +10,7 @@ export const FooterWrapper = styled.div`
   align-items: center;
   gap: min(150px, calc(0.2 * 100vw));
   width: 100%;
-  height: min(70px, calc(0.121 * 100vw));
+  height: min(70px, calc(0.121 * 100vh));
   background-color: rgba(255, 255, 255, 1);
 `;
 

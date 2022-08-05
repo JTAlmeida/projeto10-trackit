@@ -60,13 +60,18 @@ export const HabitWrapper = styled.div`
 `;
 
 export const HabitInfo = styled.div`
-  h3 {
-    width: 98%;
+  p {
     font-weight: 400;
     font-size: 19.98px;
     color: rgba(102, 102, 102, 1);
     margin-bottom: 7px;
   }
+  h3 {
+    display: flex;
+    flex-wrap: wrap;
+    color: rgba(102, 102, 102, 1);
+  }
+  h3,
   h4,
   h5 {
     font-weight: 400;
@@ -74,11 +79,11 @@ export const HabitInfo = styled.div`
   }
   h4 {
     color: ${(props) =>
-      props.greenCurrent ? "rgba(143, 197, 73, 1)" : "rgba(102, 102, 102, 1)"};
+      props.isComplete ? "rgba(143, 197, 73, 1)" : "rgba(102, 102, 102, 1)"};
   }
   h5 {
-    color: ${(props) =>
-      props.greenHighest ? "rgba(143, 197, 73, 1)" : "rgba(102, 102, 102, 1)"};
+    color: ${(props) => 
+      props.isHighest ? "rgba(143, 197, 73, 1)" : "rgba(102, 102, 102, 1)"};
   }
 `;
 
