@@ -22,12 +22,12 @@ export default function Habits() {
   const { todayProgress, setTodayProgress } = useContext(TodayProgressContext);
   const { weekDayID } = useContext(WeekDayContext);
 
-  function newPercentage() {
+  /*function newPercentage() {
     const newProgress =
       (todayProgress.todayProgress * todayProgress.length) /
       (todayProgress.length - 1);
     return newProgress;
-  }
+  }*/
 
   useEffect(() => {
     const promise = getHabits();
@@ -48,21 +48,19 @@ export default function Habits() {
     if (!confirmation) {
       return;
     }
-    setIsLoading(true);
     const promise = deleteHabit(habitId);
-    setHabitsData([]);
     promise
       .then(() => {
         setHabitsData([]);
         setIsLoading(!isLoading);
         setIsLoading(false);
         alert("Hábito deletado com sucesso!");
-        if (habitId === "asd") {
+        /*if (habitId === "asd") {
           setTodayProgress({
             todayProgress: newPercentage(),
             length: todayProgress.length - 1,
           });
-        }
+        }*/
       })
       .catch((res) => {
         alert(res.response.data.message);
