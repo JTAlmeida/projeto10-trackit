@@ -3,9 +3,7 @@ import styled from "styled-components";
 export const TodayWrapper = styled.div`
   background-color: rgba(242, 242, 242, 1);
   margin-top: 70px;
-  margin-bottom: 90px;
   width: 100%;
-  min-height: calc(100vh - 160px);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -27,7 +25,6 @@ export const TodayContent = styled.div`
     width: 100%;
     font-weight: 400;
     font-size: 22.98px;
-    line-height: 29px;
     color: #126ba5;
   }
   h2 {
@@ -37,7 +34,6 @@ export const TodayContent = styled.div`
     font-style: normal;
     font-weight: 400;
     font-size: 17.98px;
-    line-height: 22px;
     color: ${(props) =>
       props.percentCompleted > 0 ? "rgba(143, 197, 73, 1)" : "#BABABA"};
   }
@@ -67,18 +63,14 @@ export const HabitInfo = styled.div`
   h3 {
     width: 98%;
     font-weight: 400;
-    font-size: 19.976px;
-    line-height: 25px;
+    font-size: 19.98px;
     color: rgba(102, 102, 102, 1);
     margin-bottom: 7px;
   }
   h4,
   h5 {
-    font-family: "Lexend Deca";
-    font-style: normal;
     font-weight: 400;
-    font-size: 12.976px;
-    line-height: 16px;
+    font-size: 12.98px;
   }
   h4 {
     color: ${(props) =>
