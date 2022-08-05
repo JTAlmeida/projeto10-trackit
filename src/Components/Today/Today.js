@@ -5,6 +5,7 @@ import {
   deselectTodayHabit,
 } from "../../trackItService";
 import TodayProgressContext from "../../contexts/TodayProgressContext";
+import ReloadTodayContext from "../../contexts/ReloadTodayContext";
 import {
   TodayWrapper,
   TodayContent,
@@ -22,8 +23,8 @@ export default function Today() {
   weekday = weekday.replace(/^./, weekday[0].toUpperCase());
   const date = dayjs().format("DD/MM");
   const { todayProgress, setTodayProgress } = useContext(TodayProgressContext);
+  const { reloadToday, setReloadToday } = useContext(ReloadTodayContext);
   const [todayHabits, setTodayHabits] = useState([]);
-  const [reloadTodayHabits, setReloadTodayHabits] = useState(false);
 
   function getPercentage(todayHabits) {
     const numberHabits = todayHabits.length;
@@ -37,23 +38,24 @@ export default function Today() {
     const promise = getTodayHabits();
     promise
       .then((res) => {
-        console.log(res);
         setTodayHabits([...res.data]);
-        setTodayProgress({ todayProgress: getPercentage([...res.data]), length: res.data.length});
+        setTodayProgress({
+          todayProgress: getPercentage([...res.data]),
+          length: res.data.length,
+          today: res.data,
+        });
       })
       .catch((res) => {
         alert(res.response.data.message);
       });
-  }, [reloadTodayHabits]);
-
-  console.log(todayProgress);
+  }, [reloadToday]);
 
   const handleCheckHabit = (habitID, isChecked) => {
     if (!isChecked) {
       const promise = selectTodayHabit(habitID);
       promise
         .then(() => {
-          setReloadTodayHabits(!reloadTodayHabits);
+          setReloadToday(!reloadToday);
         })
         .catch((res) => {
           alert(res.response.data.message);
@@ -62,7 +64,7 @@ export default function Today() {
       const promise = deselectTodayHabit(habitID);
       promise
         .then(() => {
-          setReloadTodayHabits(!reloadTodayHabits);
+          setReloadToday(!reloadToday);
         })
         .catch((res) => {
           alert(res.response.data.message);
@@ -113,8 +115,6 @@ function TodayHabit({
   completed,
   handleCheckHabit,
 }) {
-  console.log(completed);
-
   return (
     <HabitWrapper>
       <HabitInfo
@@ -122,8 +122,12 @@ function TodayHabit({
         isHighest={currentSequence >= highestSequence}
       >
         <p>{habitName}</p>
-        <h3>Sequência atual: <h4>{` ${currentSequence} dia(s)`}</h4></h3>
-        <h3>Seu recorde: <h5>{` ${highestSequence} dia(s)`}</h5></h3>
+        <div>
+          Sequência atual: <h4>{` ${currentSequence} dia(s)`}</h4>
+        </div>
+        <div>
+          Seu recorde: <h5>{` ${highestSequence} dia(s)`}</h5>
+        </div>
       </HabitInfo>
       <HabitStatus completed={completed} onClick={handleCheckHabit}>
         <img src={checkbox} alt="checkbox" />

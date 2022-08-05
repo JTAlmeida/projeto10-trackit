@@ -17,7 +17,7 @@ export default function Footer() {
         <Link to="/hoje">
           <ProgressWrapper>
             <CircularProgressbar
-              value={todayProgress.todayProgress}
+              value={todayProgress.todayProgress||0}
               text={`Hoje`}
               background={true}
               backgroundPadding={6}

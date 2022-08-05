@@ -16,7 +16,6 @@ export default function SignIn() {
     if (user) {
       setUser(JSON.parse(localStorage.getItem("trackit")));
       navigate("/hoje");
-      
     }
   }, []);
 

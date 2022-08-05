@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import TodayProgressContext from "../../contexts/TodayProgressContext";
+import WeekDayContext from "../../contexts/WeekDayContext";
 import { ThreeDots } from "react-loader-spinner";
 import { postHabits } from "../../trackItService";
 import {
@@ -14,6 +15,7 @@ export default function CreateHabit({
   setIsLoading,
 }) {
   const { todayProgress, setTodayProgress } = useContext(TodayProgressContext);
+  const { weekDayID } = useContext(WeekDayContext);
   const [postName, setPostName] = useState("");
   const [postDays, setPostDays] = useState([]);
   const checkBoxes = [
@@ -25,8 +27,11 @@ export default function CreateHabit({
     { value: 5, day: "S" },
     { value: 6, day: "S" },
   ];
-  function newPercentage(){
-    const newProgress = (todayProgress.todayProgress * todayProgress.length)/(todayProgress.length+1);
+
+  function newPercentage() {
+    const newProgress =
+      (todayProgress.todayProgress * todayProgress.length) /
+      (todayProgress.length + 1);
     return newProgress;
   }
 
@@ -46,8 +51,16 @@ export default function CreateHabit({
       setIsLoading(false);
     });
 
-    promise.then(() => {
-      setTodayProgress({todayProgress: newPercentage(), length: todayProgress.length+1});
+    promise.then((res) => {
+      const daysArray = res.data.days;
+      daysArray.map((day) => {
+        if (day === weekDayID) {
+          setTodayProgress({
+            todayProgress: newPercentage(),
+            length: todayProgress.length + 1,
+          });
+        }
+      });
       setIsLoading(false);
       setClicked(!clicked);
     });
@@ -56,7 +69,7 @@ export default function CreateHabit({
   return (
     <>
       {isLoading ? (
-        <HabitWrapper onSubmit={sendHabit} disabled>
+        <HabitWrapper disabled>
           <input type="text" placeholder="nome do hábito" disabled />
           <Checkboxes>
             {["D", "S", "T", "Q", "Q", "S", "S"].map((weekday, index) => {
@@ -71,9 +84,6 @@ export default function CreateHabit({
           <ButtonsContainer>
             <button
               disabled
-              onClick={() => {
-                setClicked(!clicked);
-              }}
             >
               Cancelar
             </button>
@@ -92,7 +102,6 @@ export default function CreateHabit({
             type="text"
             placeholder="nome do hábito"
             value={postName}
-            name="name"
             onChange={(e) => setPostName(e.target.value)}
             required
           />
@@ -112,6 +121,7 @@ export default function CreateHabit({
           <ButtonsContainer>
             <button
               onClick={() => {
+                setPostName(postName);
                 setClicked(!clicked);
               }}
             >

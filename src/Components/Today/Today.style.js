@@ -67,12 +67,12 @@ export const HabitInfo = styled.div`
     color: rgba(102, 102, 102, 1);
     margin-bottom: 7px;
   }
-  h3 {
+  div {
     display: flex;
     flex-wrap: wrap;
     color: rgba(102, 102, 102, 1);
   }
-  h3,
+  div,
   h4,
   h5 {
     font-weight: 400;

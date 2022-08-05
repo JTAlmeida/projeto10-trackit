@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getHabits, deleteHabit } from "../../trackItService";
+import TodayProgressContext from "../../contexts/TodayProgressContext";
 import CreateHabit from "../CreateHabits/CreateHabits";
+import WeekDayContext from "../../contexts/WeekDayContext";
 import delIcon from "../../assets/delete-icon.png";
 import {
   HabitsWrapper,
@@ -17,6 +19,15 @@ export default function Habits() {
   const [clicked, setClicked] = useState(false);
   const [habitsData, setHabitsData] = useState([]);
   const [reloadHabits, setReloadHabits] = useState(false);
+  const { todayProgress, setTodayProgress } = useContext(TodayProgressContext);
+  const { weekDayID } = useContext(WeekDayContext);
+
+  function newPercentage() {
+    const newProgress =
+      (todayProgress.todayProgress * todayProgress.length) /
+      (todayProgress.length - 1);
+    return newProgress;
+  }
 
   useEffect(() => {
     const promise = getHabits();
@@ -39,11 +50,19 @@ export default function Habits() {
     }
     setIsLoading(true);
     const promise = deleteHabit(habitId);
+    setHabitsData([]);
     promise
       .then(() => {
         setHabitsData([]);
+        setIsLoading(!isLoading);
         setIsLoading(false);
-        alert("deletado com sucesso");
+        alert("Hábito deletado com sucesso!");
+        if (habitId === "asd") {
+          setTodayProgress({
+            todayProgress: newPercentage(),
+            length: todayProgress.length - 1,
+          });
+        }
       })
       .catch((res) => {
         alert(res.response.data.message);
@@ -95,6 +114,7 @@ export default function Habits() {
                 name={habit.name}
                 days={habit.days}
                 delHabit={() => delHabit(habit.id)}
+                weekDayID={weekDayID}
               />
             );
           })}
@@ -113,7 +133,14 @@ export default function Habits() {
   );
 }
 
-function SingleHabit({ name, days, delHabit, reloadHabits, setReloadHabits }) {
+function SingleHabit({
+  name,
+  days,
+  delHabit,
+  reloadHabits,
+  setReloadHabits,
+  weekDayID,
+}) {
   if (reloadHabits === false) {
     setReloadHabits(!reloadHabits);
   }
@@ -126,7 +153,11 @@ function SingleHabit({ name, days, delHabit, reloadHabits, setReloadHabits }) {
           return (
             <label key={index}>
               {days.includes(index) ? (
-                <input disabled type="checkbox" checked />
+                (() => {
+                  if (index === Number(weekDayID)) {
+                  }
+                  return <input disabled type="checkbox" checked />;
+                })(<input disabled type="checkbox" checked />)
               ) : (
                 <input disabled type="checkbox" />
               )}

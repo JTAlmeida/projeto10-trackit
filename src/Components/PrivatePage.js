@@ -35,14 +35,14 @@ export default function PrivatePage({ children }) {
     return renderError();
   } else {
     const timeLogged = auth.timestamp;
-    if (now - timeLogged >= 10 * MIN) {
+    if (now - timeLogged >= 60 * MIN * 24) {
       return renderError();
     } else {
       return (
         <>
           <Header />
           {children}
-          <Footer/>
+          <Footer />
         </>
       );
     }
