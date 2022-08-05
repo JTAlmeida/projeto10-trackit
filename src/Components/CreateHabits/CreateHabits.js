@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import { postHabits } from "../../trackItService";
 import {
@@ -13,7 +12,6 @@ export default function CreateHabit({
   isLoading,
   setIsLoading,
 }) {
-  const navigate = useNavigate();
   const [postName, setPostName] = useState("");
   const [postDays, setPostDays] = useState([]);
   const checkBoxes = [
@@ -27,6 +25,13 @@ export default function CreateHabit({
   ];
 
   function sendHabit(e) {
+    if (postName.length === 0){
+      alert('Preencha o campo com o nome do hábito.');
+      return;
+    } else if(postDays.length === 0){
+      alert('Selecione pelo menos um dia para este hábito.');
+      return;
+    }
     e.preventDefault();
     const name = postName;
     const days = postDays;

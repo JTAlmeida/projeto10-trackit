@@ -22,37 +22,37 @@ export default function App() {
     <>
       <GlobalStyle />
       <UserContext.Provider value={{ user, setUser }}>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<SignIn />}></Route>
-              <Route path="/cadastro" element={<Signup />}></Route>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<SignIn />}></Route>
+            <Route path="/cadastro" element={<Signup />}></Route>
 
-              <Route
-                path="/habitos"
-                element={
-                  <PrivatePage>
-                    <Habits />
-                  </PrivatePage>
-                }
-              ></Route>
-              <Route
-                path="/hoje"
-                element={
-                  <PrivatePage>
-                    <Today />
-                  </PrivatePage>
-                }
-              ></Route>
-              <Route
-                path="/historico"
-                element={
-                  <PrivatePage>
-                    <History />
-                  </PrivatePage>
-                }
-              ></Route>
-            </Routes>
-          </BrowserRouter>
+            <Route
+              path="/habitos"
+              element={
+                <PrivatePage>
+                  <Habits />
+                </PrivatePage>
+              }
+            ></Route>
+            <Route
+              path="/hoje"
+              element={
+                <PrivatePage>
+                  <Today />
+                </PrivatePage>
+              }
+            ></Route>
+            <Route
+              path="/historico"
+              element={
+                <PrivatePage>
+                  <History />
+                </PrivatePage>
+              }
+            ></Route>
+          </Routes>
+        </BrowserRouter>
       </UserContext.Provider>
     </>
   );

@@ -47,38 +47,6 @@ export const NoHabits = styled.div`
   text-align: left;
 `;
 
-export const HabitWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-  width: 100%;
-  height: 91px;
-  background-color: rgba(255, 255, 255, 1);
-  border-radius: 5px;
-  padding: 18px;
-
-  h1 {
-    width: 98%;
-    height: 45px;
-    padding-left: 11px;
-    margin-bottom: 8px;
-    border-radius: 5px;
-    font-weight: 400;
-    font-size: 19.98px;
-    color: rgba(102, 102, 102, 1);
-
-    img {
-      flex-shrink: 0;
-      width: 50%;
-    }
-
-    &:disabled {
-      background-color: #f2f2f2;
-      color: #afafaf;
-    }
-  }
-`;
-
 export const Checkboxes = styled.div`
   width: 100%;
   display: flex;
@@ -102,49 +70,49 @@ export const Checkboxes = styled.div`
       border: 1px solid rgba(212, 212, 212, 1);
       border-radius: 5px;
       font-weight: 400;
-      font-size: 19.976px;
+      font-size: 19.98px;
       line-height: 25px;
       color: rgba(219, 219, 219, 1);
       transition: 0.3s;
       user-select: none;
       overflow: hidden;
     }
+
     input[type="checkbox"]:checked ~ span {
-      background-color: #cfcfcf;
-      color: #ffffff;
+      background-color: rgba(207, 207, 207, 1);
+      color: rgba(255, 255, 255, 1);
     }
   }
 `;
 
-export const ButtonsContainer = styled.div`
-  margin-top: 29px;
-  height: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 6px;
-  button {
+export const HabitWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 91px;
+  margin: 5px 0;
+  padding: 18px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 1);
+
+  h1 {
+    width: 98%;
+    padding-left: 2px;
+    margin-bottom: 8px;
+    font-weight: 400;
+    font-size: 19.98px;
+    color: rgba(102, 102, 102, 1);
+  }
+  img {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 13px;
+    height: 15px;
     cursor: pointer;
   }
-  button:nth-child(1) {
-    background-color: rgba(255, 255, 255, 1);
-    height: 100%;
-    padding: 0 17px;
-    font-weight: 400;
-    font-size: 15.976px;
-    line-height: 20px;
-    text-align: center;
-    color: #52b6ff;
-  }
-  button:nth-child(2) {
-    background-color: #52b6ff;
-    height: 100%;
-    padding: 0 17px;
-    border-radius: 4.63636px;
-    font-weight: 400;
-    font-size: 15.976px;
-    line-height: 20px;
-    text-align: center;
-    color: rgba(255, 255, 255, 1);
+  ${Checkboxes} {
+    label {
+      pointer-events: none;
+    }
   }
 `;

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { getHabits } from "../../trackItService";
 import CreateHabit from "../CreateHabits/CreateHabits";
 import delIcon from "../../assets/delete-icon.png";
@@ -11,11 +10,9 @@ import {
   NoHabits,
   HabitWrapper,
   Checkboxes,
-  ButtonsContainer,
 } from "./Habits.style";
 
 export default function Habits() {
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [habitsData, setHabitsData] = useState([]);
@@ -28,7 +25,6 @@ export default function Habits() {
     });
 
     promise.then((res) => {
-      console.log(res);
       setHabitsData(res.data);
     });
   }, [isLoading]);
@@ -90,10 +86,26 @@ export default function Habits() {
             </>
           )}
           {habitsData.map((habit, index) => (
-            <HabitWrapper key={index}>
-              <h1>{habit.name}</h1>
-              <img src={delIcon} width="14" height="16" />
-            </HabitWrapper>
+            <>
+              <HabitWrapper key={index}>
+                <h1>{habit.name}</h1>
+                <img src={delIcon}/>
+                <Checkboxes>
+                  {["D", "S", "T", "Q", "Q", "S", "S"].map((weekday, index) => {
+                    return (
+                      <label key={index}>
+                        {habit.days.includes(index) ? (
+                          <input disabled type="checkbox" checked />
+                        ) : (
+                          <input disabled type="checkbox" />
+                        )}
+                        <span>{weekday}</span>
+                      </label>
+                    );
+                  })}
+                </Checkboxes>
+              </HabitWrapper>
+            </>
           ))}
         </ContentWrapper>
       </HabitsWrapper>
