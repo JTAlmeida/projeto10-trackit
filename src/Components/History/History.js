@@ -1,7 +1,3 @@
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import UserContext from "../../contexts/UserContext";
-
 import {
   HistoryWrapper,
   ContentWrapper,
@@ -9,9 +5,9 @@ import {
   MyHistory,
 } from "./History.style";
 
+
+
 export default function History() {
-  const { user, setUser } = useContext(UserContext);
-  const navigate = useNavigate();
 
   return (
     <>

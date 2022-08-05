@@ -38,15 +38,10 @@ export default function CreateHabit({
     promise.catch((res) => {
       alert(res.response.data.message);
       setIsLoading(false);
-      setPostName("");
-      setPostDays([]);
     });
 
     promise.then((res) => {
-      console.log(res);
       setIsLoading(false);
-      setPostName("");
-      setPostDays([]);
       setClicked(!clicked);
     });
   }
@@ -54,37 +49,17 @@ export default function CreateHabit({
   return (
     <>
       {isLoading ? (
-        <HabitWrapper onSubmit={sendHabit}>
+        <HabitWrapper onSubmit={sendHabit} disabled>
           <input type="text" placeholder="nome do hábito" disabled />
           <Checkboxes>
-            <label>
-              <input type="checkbox" disabled />
-              <span>D</span>
-            </label>
-            <label>
-              <input type="checkbox" disabled />
-              <span>S</span>
-            </label>
-            <label>
-              <input type="checkbox" disabled />
-              <span>T</span>
-            </label>
-            <label>
-              <input type="checkbox" disabled />
-              <span>Q</span>
-            </label>
-            <label>
-              <input type="checkbox" disabled />
-              <span>Q</span>
-            </label>
-            <label>
-              <input type="checkbox" disabled />
-              <span>S</span>
-            </label>
-            <label>
-              <input type="checkbox" disabled />
-              <span>S</span>
-            </label>
+            {["D", "S", "T", "Q", "Q", "S", "S"].map((weekday, index) => {
+              return (
+                <label key={index}>
+                  <input type="checkbox" disabled />
+                  <span>{weekday}</span>
+                </label>
+              );
+            })}
           </Checkboxes>
           <ButtonsContainer>
             <button
@@ -111,7 +86,7 @@ export default function CreateHabit({
             placeholder="nome do hábito"
             value={postName}
             name="name"
-            onChange={(e) => setPostName( e.target.value)}
+            onChange={(e) => setPostName(e.target.value)}
             required
           />
           <Checkboxes>
@@ -151,7 +126,6 @@ function WeekDay({ value, day, postDays, setPostDays }) {
       <input
         type="checkbox"
         value={value}
-        onFocus={postDays}
         onChange={(e) => {
           if (!hasValue) {
             setPostDays([...postDays, e.target.value]);

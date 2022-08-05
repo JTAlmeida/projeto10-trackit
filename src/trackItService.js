@@ -40,4 +40,24 @@ function deleteHabit(habitId) {
   return promise;
 }
 
-export {signUp, signIn, postHabits, getHabits, deleteHabit};
+function getTodayHabits() {
+  const config = createHeaders();
+  const promise = axios.get(`${BASE_URL}/habits/today`, config);
+  return promise;
+}
+
+function selectTodayHabit(habitID) {
+  const config = createHeaders();
+  const promise = axios.post(`${BASE_URL}/habits/${habitID}/check`,{}, config)
+  console.log (config);
+  return promise;
+}
+
+function deselectTodayHabit(habitID) {
+  const config = createHeaders();
+  const promise = axios.post(`${BASE_URL}/habits/${habitID}/uncheck`,{}, config)
+  console.log(config);
+  return promise;
+}
+
+export {signUp, signIn, postHabits, getHabits, deleteHabit, getTodayHabits, selectTodayHabit, deselectTodayHabit};

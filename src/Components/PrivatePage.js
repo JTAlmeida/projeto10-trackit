@@ -42,7 +42,7 @@ export default function PrivatePage({ children }) {
         <>
           <Header />
           {children}
-          <Footer />
+          <Footer/>
         </>
       );
     }

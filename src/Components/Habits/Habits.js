@@ -16,6 +16,7 @@ export default function Habits() {
   const [isLoading, setIsLoading] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [habitsData, setHabitsData] = useState([]);
+  const [reloadHabits, setReloadHabits] = useState(false);
 
   useEffect(() => {
     const promise = getHabits();
@@ -36,11 +37,10 @@ export default function Habits() {
     if (!confirmation) {
       return;
     }
+    setIsLoading(true);
     const promise = deleteHabit(habitId);
     promise
-      .then((res) => {
-        console.log(res);
-        setIsLoading(!isLoading);
+      .then(() => {
         setIsLoading(false);
       })
       .catch((res) => {
@@ -49,21 +49,35 @@ export default function Habits() {
   };
 
   console.log(habitsData);
+
   return (
     <>
       <HabitsWrapper>
         <ContentWrapper>
-          <HabitsTop>
-            Meus Hábitos
-            {clicked ? (
-              <Button
-                onClick={() => {
-                  setClicked(!clicked);
-                }}
-              >
-                -
-              </Button>
-            ) : (
+          {clicked ? (
+            <>
+              <HabitsTop>
+                Meus Hábitos
+                <Button
+                  onClick={() => {
+                    setClicked(!clicked);
+                  }}
+                >
+                  -
+                </Button>
+              </HabitsTop>
+              <CreateHabit
+                clicked={clicked}
+                setClicked={setClicked}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                reloadHabits={reloadHabits}
+                setReloadHabits={setReloadHabits}
+              />
+            </>
+          ) : (
+            <HabitsTop>
+              Meus Hábitos
               <Button
                 onClick={() => {
                   setClicked(!clicked);
@@ -71,39 +85,9 @@ export default function Habits() {
               >
                 +
               </Button>
-            )}
-          </HabitsTop>
-
-          {clicked ? (
-            <>
-              <CreateHabit
-                clicked={clicked}
-                setClicked={setClicked}
-                isLoading={isLoading}
-                setIsLoading={setIsLoading}
-              />
-              {() => {
-                if (habitsData === []) {
-                  <NoHabits>
-                    Você não tem nenhum hábito cadastrado ainda. Adicione um
-                    hábito para começar a trackear!
-                  </NoHabits>;
-                } else {
-                }
-              }}
-            </>
-          ) : (
-            <>
-              {() => {
-                if (habitsData === []) {
-                  <NoHabits>
-                    Você não tem nenhum hábito cadastrado ainda. Adicione um
-                    hábito para começar a trackear!
-                  </NoHabits>;
-                }
-              }}
-            </>
+            </HabitsTop>
           )}
+
           {habitsData.map((habit, index) => {
             return (
               <SingleHabit
@@ -114,14 +98,25 @@ export default function Habits() {
               />
             );
           })}
+
+          {habitsData.length === 0 ? (
+            <NoHabits>
+              Você não tem nenhum hábito cadastrado ainda. Adicione um hábito
+              para começar a trackear!
+            </NoHabits>
+          ) : (
+            <></>
+          )}
         </ContentWrapper>
       </HabitsWrapper>
     </>
   );
 }
 
-function SingleHabit({ name, days, delHabit}) {
-
+function SingleHabit({ name, days, delHabit, reloadHabits, setReloadHabits }) {
+  if (reloadHabits === false) {
+    setReloadHabits(!reloadHabits);
+  }
   return (
     <HabitWrapper>
       <h1>{name}</h1>

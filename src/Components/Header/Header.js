@@ -3,7 +3,7 @@ import UserContext from "../../contexts/UserContext";
 import { HeaderWrapper } from "./Header.style";
 
 export default function Header() {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
     return (
       <HeaderWrapper>
