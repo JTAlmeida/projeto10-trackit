@@ -55,9 +55,7 @@ export default function App() {
     if (user) {
       const promise = getTodayHabits();
       promise.then((res) => {
-        setTodayProgress({
-          progress: getPercentage([...res.data]),
-        });
+        setTodayProgress(() => getPercentage([...res.data]));
       });
     }
   }, []);

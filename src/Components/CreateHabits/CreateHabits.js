@@ -12,19 +12,13 @@ export default function CreateHabit({
   setClicked,
   isLoading,
   setIsLoading,
+  postName,
+  setPostName,
+  postDays,
+  setPostDays,
+  checkBoxes,
 }) {
   const { setTodayProgress } = useContext(TodayProgressContext);
-  const [postName, setPostName] = useState("");
-  const [postDays, setPostDays] = useState([]);
-  const checkBoxes = [
-    { value: 0, day: "D" },
-    { value: 1, day: "S" },
-    { value: 2, day: "T" },
-    { value: 3, day: "Q" },
-    { value: 4, day: "Q" },
-    { value: 5, day: "S" },
-    { value: 6, day: "S" },
-  ];
 
   function getPercentage(todayHabits) {
     const numberHabits = todayHabits.length;
@@ -55,12 +49,12 @@ export default function CreateHabit({
       promiseTodayHabits.then((resToday) => {
         setTodayProgress(() => getPercentage([...resToday.data]));
       });
+      setPostName("");
+      setPostDays("");
       setIsLoading(false);
       setClicked(!clicked);
     });
   }
-  console.log(postDays);
-  console.log(postName);
 
   return (
     <>
@@ -132,30 +126,68 @@ export default function CreateHabit({
 function WeekDay({ value, day, postDays, setPostDays }) {
   const [hasValue, setHasValue] = useState(false);
 
-  return (
-    <label>
-      <input
-        type="checkbox"
-        value={value}
-        onChange={(e) => {
-          if (!hasValue) {
-            setPostDays([...postDays, e.target.value]);
-            setHasValue(true);
-          } else {
-            let temp = [...postDays];
-            let index;
-            for (let i = 0; i < postDays.length; i++) {
-              if (postDays[i] === e.target.value) {
-                index = i;
-                temp.splice(index, 1);
+  if (!hasValue) {
+    for (let i = 0; i < postDays.length; i++) {
+      if (value === postDays[i]) {
+        setHasValue(true);
+      }
+    }
+  }
+
+  if (hasValue) {
+    return (
+      <label>
+        <input
+          type="checkbox"
+          checked
+          value={value}
+          onChange={(e) => {
+            if (!hasValue) {
+              setPostDays([...postDays, e.target.value]);
+              setHasValue(true);
+            } else {
+              let temp = [...postDays];
+              let index;
+              for (let i = 0; i < postDays.length; i++) {
+                if (postDays[i] === e.target.value) {
+                  index = i;
+                  temp.splice(index, 1);
+                }
               }
+              setPostDays(temp);
+              setHasValue(false);
             }
-            setPostDays(temp);
-            setHasValue(false);
-          }
-        }}
-      />
-      <span>{day}</span>
-    </label>
-  );
+          }}
+        />
+        <span>{day}</span>
+      </label>
+    );
+  } else {
+    return (
+      <label>
+        <input
+          type="checkbox"
+          value={value}
+          onChange={(e) => {
+            if (!hasValue) {
+              setPostDays([...postDays, e.target.value]);
+              setHasValue(true);
+            } else {
+              let temp = [...postDays];
+              let index;
+              for (let i = 0; i < postDays.length; i++) {
+                if (postDays[i] === e.target.value) {
+                  index = i;
+                  temp.splice(index, 1);
+                }
+              }
+              setPostDays(temp);
+              setHasValue(false);
+            }
+          }}
+        />
+        <span>{day}</span>
+      </label>
+    );
+  }
 }

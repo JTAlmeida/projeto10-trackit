@@ -18,9 +18,19 @@ export default function Habits() {
   const [isLoading, setIsLoading] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [habitsData, setHabitsData] = useState([]);
+  const [postName, setPostName] = useState("");
+  const [postDays, setPostDays] = useState([]);
   const { setTodayProgress } = useContext(TodayProgressContext);
   const { weekDayID } = useContext(WeekDayContext);
-
+  const [checkBoxes] = useState([
+    { value: "0", day: "D" },
+    { value: "1", day: "S" },
+    { value: "2", day: "T" },
+    { value: "3", day: "Q" },
+    { value: "4", day: "Q" },
+    { value: "5", day: "S" },
+    { value: "6", day: "S" },
+  ]);
   function getPercentage(todayHabits) {
     const numberHabits = todayHabits.length;
     const numberHabitsDone = todayHabits.filter((habit) => habit.done).length;
@@ -49,13 +59,11 @@ export default function Habits() {
       return;
     }
     const promise = deleteHabit(habitId);
-    console.log(habitId);
 
     promise
       .then(() => {
         const promiseTodayHabits = getTodayHabits();
         promiseTodayHabits.then((resToday) => {
-          console.log(resToday);
           setTodayProgress(() => getPercentage([...resToday.data]));
         });
         setHabitsData([]);
@@ -89,6 +97,11 @@ export default function Habits() {
                 setClicked={setClicked}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
+                postName={postName}
+                setPostName={setPostName}
+                postDays={postDays}
+                setPostDays={setPostDays}
+                checkBoxes={checkBoxes}
               />
             </>
           ) : (
