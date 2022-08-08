@@ -1,23 +1,23 @@
 import axios from "axios";
 
-const BASE_URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/';
+const BASE_URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/";
 
 function createHeaders() {
   const auth = JSON.parse(localStorage.getItem("trackit"));
   const config = {
     headers: {
-      Authorization: `Bearer ${auth.token}`
-    }
+      Authorization: `Bearer ${auth.token}`,
+    },
   };
   return config;
 }
 
-function signUp(body){
+function signUp(body) {
   const signUpAPI = `${BASE_URL}/auth/sign-up`;
   return axios.post(signUpAPI, body);
 }
 
-function signIn(body){
+function signIn(body) {
   const signInAPI = `${BASE_URL}/auth/login`;
   return axios.post(signInAPI, body);
 }
@@ -28,7 +28,7 @@ function postHabits(body) {
   return promise;
 }
 
-function getHabits(){
+function getHabits() {
   const config = createHeaders();
   const promise = axios.get(`${BASE_URL}/habits`, config);
   return promise;
@@ -48,16 +48,27 @@ function getTodayHabits() {
 
 function selectTodayHabit(habitID) {
   const config = createHeaders();
-  const promise = axios.post(`${BASE_URL}/habits/${habitID}/check`,{}, config)
-  console.log (config);
+  const promise = axios.post(`${BASE_URL}/habits/${habitID}/check`, {}, config);
   return promise;
 }
 
 function deselectTodayHabit(habitID) {
   const config = createHeaders();
-  const promise = axios.post(`${BASE_URL}/habits/${habitID}/uncheck`,{}, config)
-  console.log(config);
+  const promise = axios.post(
+    `${BASE_URL}/habits/${habitID}/uncheck`,
+    {},
+    config
+  );
   return promise;
 }
 
-export {signUp, signIn, postHabits, getHabits, deleteHabit, getTodayHabits, selectTodayHabit, deselectTodayHabit};
+export {
+  signUp,
+  signIn,
+  postHabits,
+  getHabits,
+  deleteHabit,
+  getTodayHabits,
+  selectTodayHabit,
+  deselectTodayHabit,
+};

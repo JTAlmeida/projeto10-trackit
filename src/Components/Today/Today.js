@@ -39,11 +39,7 @@ export default function Today() {
     promise
       .then((res) => {
         setTodayHabits([...res.data]);
-        setTodayProgress({
-          todayProgress: getPercentage([...res.data]),
-          length: res.data.length,
-          today: res.data,
-        });
+        setTodayProgress(() => getPercentage([...res.data]));
       })
       .catch((res) => {
         alert(res.response.data.message);

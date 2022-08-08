@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
-import { getHabits, deleteHabit } from "../../trackItService";
-//import TodayProgressContext from "../../contexts/TodayProgressContext";
+import { getTodayHabits, getHabits, deleteHabit } from "../../trackItService";
+import TodayProgressContext from "../../contexts/TodayProgressContext";
 import CreateHabit from "../CreateHabits/CreateHabits";
 import WeekDayContext from "../../contexts/WeekDayContext";
 import delIcon from "../../assets/delete-icon.png";
@@ -18,16 +18,16 @@ export default function Habits() {
   const [isLoading, setIsLoading] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [habitsData, setHabitsData] = useState([]);
-  const [reloadHabits, setReloadHabits] = useState(false);
-  //const { todayProgress, setTodayProgress } = useContext(TodayProgressContext);
+  const { setTodayProgress } = useContext(TodayProgressContext);
   const { weekDayID } = useContext(WeekDayContext);
 
-  /*function newPercentage() {
-    const newProgress =
-      (todayProgress.todayProgress * todayProgress.length) /
-      (todayProgress.length - 1);
-    return newProgress;
-  }*/
+  function getPercentage(todayHabits) {
+    const numberHabits = todayHabits.length;
+    const numberHabitsDone = todayHabits.filter((habit) => habit.done).length;
+    return numberHabits
+      ? 100 * (numberHabitsDone / numberHabits).toFixed(2)
+      : 0;
+  }
 
   useEffect(() => {
     const promise = getHabits();
@@ -49,18 +49,19 @@ export default function Habits() {
       return;
     }
     const promise = deleteHabit(habitId);
+    console.log(habitId);
+
     promise
       .then(() => {
+        const promiseTodayHabits = getTodayHabits();
+        promiseTodayHabits.then((resToday) => {
+          console.log(resToday);
+          setTodayProgress(() => getPercentage([...resToday.data]));
+        });
         setHabitsData([]);
         setIsLoading(!isLoading);
         setIsLoading(false);
         alert("Hábito deletado com sucesso!");
-        /*if (habitId === "asd") {
-          setTodayProgress({
-            todayProgress: newPercentage(),
-            length: todayProgress.length - 1,
-          });
-        }*/
       })
       .catch((res) => {
         alert(res.response.data.message);
@@ -88,8 +89,6 @@ export default function Habits() {
                 setClicked={setClicked}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
-                reloadHabits={reloadHabits}
-                setReloadHabits={setReloadHabits}
               />
             </>
           ) : (

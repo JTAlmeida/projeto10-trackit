@@ -1,8 +1,7 @@
 import { useState, useContext } from "react";
 import TodayProgressContext from "../../contexts/TodayProgressContext";
-import WeekDayContext from "../../contexts/WeekDayContext";
 import { ThreeDots } from "react-loader-spinner";
-import { postHabits } from "../../trackItService";
+import { getTodayHabits, postHabits } from "../../trackItService";
 import {
   HabitWrapper,
   Checkboxes,
@@ -14,8 +13,7 @@ export default function CreateHabit({
   isLoading,
   setIsLoading,
 }) {
-  const { todayProgress, setTodayProgress } = useContext(TodayProgressContext);
-  const { weekDayID } = useContext(WeekDayContext);
+  const { setTodayProgress } = useContext(TodayProgressContext);
   const [postName, setPostName] = useState("");
   const [postDays, setPostDays] = useState([]);
   const checkBoxes = [
@@ -28,11 +26,12 @@ export default function CreateHabit({
     { value: 6, day: "S" },
   ];
 
-  function newPercentage() {
-    const newProgress =
-      (todayProgress.todayProgress * todayProgress.length) /
-      (todayProgress.length + 1);
-    return newProgress;
+  function getPercentage(todayHabits) {
+    const numberHabits = todayHabits.length;
+    const numberHabitsDone = todayHabits.filter((habit) => habit.done).length;
+    return numberHabits
+      ? 100 * (numberHabitsDone / numberHabits).toFixed(2)
+      : 0;
   }
 
   function sendHabit(e) {
@@ -43,7 +42,7 @@ export default function CreateHabit({
     }
     setIsLoading(true);
     const name = postName;
-    const days = postDays;
+    const days = [...postDays];
     const promise = postHabits({ name, days });
 
     promise.catch((res) => {
@@ -51,20 +50,17 @@ export default function CreateHabit({
       setIsLoading(false);
     });
 
-    promise.then((res) => {
-      const daysArray = res.data.days;
-      daysArray.map((day) => {
-        if (day === weekDayID) {
-          setTodayProgress({
-            todayProgress: newPercentage(),
-            length: todayProgress.length + 1,
-          });
-        }
+    promise.then(() => {
+      const promiseTodayHabits = getTodayHabits();
+      promiseTodayHabits.then((resToday) => {
+        setTodayProgress(() => getPercentage([...resToday.data]));
       });
       setIsLoading(false);
       setClicked(!clicked);
     });
   }
+  console.log(postDays);
+  console.log(postName);
 
   return (
     <>
@@ -82,11 +78,7 @@ export default function CreateHabit({
             })}
           </Checkboxes>
           <ButtonsContainer>
-            <button
-              disabled
-            >
-              Cancelar
-            </button>
+            <button disabled>Cancelar</button>
             <button>
               <ThreeDots
                 color="rgba(255, 255, 255, 1)"
@@ -120,9 +112,11 @@ export default function CreateHabit({
           </Checkboxes>
           <ButtonsContainer>
             <button
+              type="button"
               onClick={() => {
-                setPostName(postName);
                 setClicked(!clicked);
+                setPostName(postName);
+                setPostDays(postDays);
               }}
             >
               Cancelar
